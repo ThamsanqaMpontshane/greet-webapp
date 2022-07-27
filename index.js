@@ -31,9 +31,11 @@ app.use(express.static("public"));
 app.get("/", (req, res) => {
     let theGreeting = greet1.getLanguage();
     let bala = greet1.getCounter();
+    // let restart = greet1.clear();
     res.render("index", {
         getTheGreeting: theGreeting,
-        thiscounter: bala
+        thiscounter: bala,
+        // theClear: restart
     });
 });
 
@@ -78,9 +80,9 @@ app.get("/greeted/:name", function(req, res) {
         if (key === name) {
             res.render('counter', {
                 name: key,
-                count: nameMap[key],
-                myMessage: "You have greeted " + name + " " + nameMap[key] + " times"
-                
+                count: " " + nameMap[key],
+                myMessage: "You have greeted ",
+                times: " times" 
             });
         }
     }

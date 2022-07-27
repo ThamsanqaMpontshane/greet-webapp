@@ -7,7 +7,7 @@ function greet(data) {
             //if language is not selected do not add to nameMap
             if (language) {
             let upperCaseName = name.toUpperCase();
-            if (nameMap[upperCaseName] === undefined || nameMap[upperCaseName] === null) {
+            if (nameMap[upperCaseName] === undefined || nameMap[upperCaseName] === null && nameMap[upperCaseName] !== Number) {
                 nameMap[upperCaseName] = 0;
             }
             nameMap[upperCaseName]++;
@@ -20,7 +20,7 @@ function greet(data) {
     
     function setlanguage(name,language) {
         //if language is not selected
-        if (language !== null && language !== "" && language !== undefined && name !== "" && name !== null && name !== undefined) {
+        if (language !== null && language !== "" && language !== undefined && name !== "" && name !== null && name !== undefined && name.match(/^[a-zA-Z]+$/)) {
             if (language === "English") {
                 greetingmessage = "Hello " + "" + name;
             } else if (language === "Xhosa") {
@@ -60,6 +60,11 @@ function greet(data) {
     function getCounter() {
         return forCounter();
     }
+    function reset() {
+        nameMap = {};
+        greetingmessage = "";
+        greetingerror = "";
+    }
 
     return {
         setName,
@@ -70,7 +75,8 @@ function greet(data) {
         getLanguage,
         greetingError,
         getCounter,
-        duplicate
+        duplicate,
+        reset
     };
 }
 
