@@ -43,28 +43,29 @@
     <div class="btn">
       <button type="submit" class="btn1">Greet</button>
 
-      
 
-      <button type="reset" class="btn2" >Clear</button>
+
+      <button type="reset" class="btn2">Clear</button>
     </div>
 
     </form>
     <a href="/greeted" class="btn2">
       <button type="submit" style="margin-left: 236px; margin-top:10px">Names</button>
-      </a>
+    </a>
     <br>
     <br>
   </div>
 
   {{#if messages.info}}
-<div class="entry">
-    <h1> {{messages.info}}</h1>
-</div>
-{{/if}}
+  <div class="entry">
+    <h1 class="error"> {{messages.info}}</h1>
+  </div>
+  {{/if}}
 
   <h3 class="counter" name="thecounter" id="text" style="text-align: center;">{{thiscounter}}</h3>
   <div id="message" name="theGreeting">{{getTheGreeting}}
   </div>
+  <script src="timeout.js"></script>
 </body>
 
 </html>

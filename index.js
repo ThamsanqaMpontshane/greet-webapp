@@ -4,12 +4,15 @@ import exphbs from "express-handlebars";
 import greet from "./greet.js";
 import flash from "express-flash";
 import session from "express-session";
+// import pgPromise from 'pg-promise';
 
 const app = express();
 const greet1 = greet();
+// const pgp = pgPromise();
+// const db = pgp("postgres://ktbmqlfewjewga:db46b615c42ed38f43050b4fd1b875395874a1f89d7edbeeb8882529738cbb3a@ec2-50-19-255-190.compute-1.amazonaws.com:5432/daud1uk12sgdr5");
 
 app.use(session({
-    secret : "<add a secret string here>",
+    secret: "<add a secret string here>",
     resave: false,
     saveUninitialized: true
 }));
@@ -46,34 +49,34 @@ app.post("/greetings", (req, res) => {
     let nameMap = greet1.getName();
 
     if (name == "" && language == null) {
-        req.flash("info" ,"Please Enter A Name And Language");
+        req.flash("info", "Please Enter A Name And Language");
     } else if (name == "" && language !== null) {
-        req.flash("info","Please Enter A Name");
+        req.flash("info", "Please Enter A Name");
     } else if (!name.match(/^[a-zA-Z]+$/)) {
-        req.flash("info","Please Enter A Valid Name");
+        req.flash("info", "Please Enter A Valid Name");
     } else if (language == null) {
-        req.flash("info","Please Select A Language");
+        req.flash("info", "Please Select A Language");
     }
     //duplicate name
     else if (nameMap[name] > 1) {
-        req.flash("info","You have already greeted " + name + " once");
+        req.flash("info", "You have already greeted " + name + " once");
     }
-    greet1.setlanguage(name,language);
-    greet1.error(name,language);
-    greet1.setName(name,language);
+    greet1.setlanguage(name, language);
+    greet1.error(name, language);
+    greet1.setName(name, language);
     greet1.duplicate(name);
     greet1.forCounter();
     res.redirect("/");
 });
 
-app.get("/greeted", function(req, res){
+app.get("/greeted", function (req, res) {
     console.log(greet1.getName());
-    res.render('names',  {
+    res.render('names', {
         names: greet1.getName()
     });
 });
 
-app.get("/greeted/:name", function(req, res) {
+app.get("/greeted/:name", function (req, res) {
     let name = req.params.name;
     let nameMap = greet1.getName();
     for (let key in nameMap) {
@@ -82,7 +85,7 @@ app.get("/greeted/:name", function(req, res) {
                 name: key,
                 count: " " + nameMap[key],
                 myMessage: "You have greeted ",
-                times: " times" 
+                times: " times"
             });
         }
     }
