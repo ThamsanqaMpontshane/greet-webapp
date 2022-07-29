@@ -14,19 +14,19 @@
     <div class="main">
       <h1>GREETINGS</h1>
       <br>
-      <br>
-      <br>
       <form action="/greetings" method="POST">
 
         <div class="num1">
-          <label for="username" style="margin-left: 35px; text-decoration: underline;">Name</label>
-          <input type="text" name="theName" id="username" placeholder="Enter Your Name">
+          <label for="username" style="margin-left: 189px; text-decoration: underline;font-size: 25px">Enter Your Name</label>
+          <br>
+          <br>
+          <input type="text" name="theName" id="username" placeholder="Enter Your Name" style="margin-left:150px;width: 252px;height: 30px;">
         </div>
-
-        <label for="language" style="margin-left: 35px; text-decoration: underline;">Language</label>
-        <br><br>
-
-        <input type="radio" name="language" value="English" id="english" style="margin-left: 35px">
+        <br>
+        <label for="language" style="margin-left: 190px; text-decoration: underline;font-size:25px">Select Language</label>
+        <br><br><br>
+        <div style="margin-left: 130px;">        
+          <input type="radio" name="language" value="English" id="english" style="margin-left: 35px">
         <label for="english">English</label>
 
         <input type="radio" name="language" value="Xhosa" id="xhosa">
@@ -34,9 +34,10 @@
 
         <input type="radio" name="language" value="Afrikaans" id="afrikaans">
         <label for="afrikaans">Afrikaans</label>
+        </div>
+
 
     </div>
-    <br>
     <br>
     <br>
 
@@ -50,14 +51,14 @@
 
     </form>
     <a href="/greeted" class="btn2">
-      <button type="submit" style="margin-left: 236px; margin-top:10px">Names</button>
+      <button type="submit" style="margin-left: 210px; margin-top:10px">Greeted Names</button>
     </a>
     <br>
     <br>
   </div>
 
   {{#if messages.info}}
-  <div class="entry">
+  <div class="entry" style="margin-left: 20px;">
     <h1 class="error"> {{messages.info}}</h1>
   </div>
   {{/if}}
