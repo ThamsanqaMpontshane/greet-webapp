@@ -3,7 +3,7 @@ function greet(data) {
     let greetingmessage = "";
     let greetingerror = "";
 
-    function setName(name, language) {
+    async function setName(name, language) {
         if (name) {
             if (language) {
                 if (name.match(/^[a-zA-Z]+$/)) {
@@ -17,11 +17,11 @@ function greet(data) {
         }
     }
 
-        function getName() {
+        async function getName() {
             return nameMap;
         }
 
-        function setlanguage(name, language) {
+        async function setlanguage(name, language) {
             //if language is not selected
             if (language !== null && language !== "" && language !== undefined && name !== "" && name !== null && name !== undefined && name.match(/^[a-zA-Z]+$/)) {
                 if (language === "English") {
@@ -34,11 +34,11 @@ function greet(data) {
             }
         }
 
-        function getLanguage() {
+        async function getLanguage() {
             return greetingmessage;
         }
 
-        function error(name, language) {
+        async function error(name, language) {
             if (name == "" && language == null) {
                 greetingerror = "Please Enter A Name And Language";
             } else if (name == "" && language !== "") {
@@ -50,26 +50,26 @@ function greet(data) {
             }
         }
 
-        function duplicate(name) {
+        async function duplicate(name) {
             if (nameMap[name] > 1) {
                 greetingerror = "You have already greeted " + name + " once";
             }
         }
 
-        function greetingError() {
+        async function greetingError() {
             return greetingerror;
         }
 
-        function forCounter() {
+        async function forCounter() {
             var myCounter = Object.keys(nameMap).length;
             return myCounter;
         }
 
-        function getCounter() {
+        async function getCounter() {
             return forCounter();
         }
 
-        function reset() {
+        async function reset() {
             nameMap = {};
             greetingmessage = "";
             greetingerror = "";

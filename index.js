@@ -4,12 +4,22 @@ import exphbs from "express-handlebars";
 import greet from "./greet.js";
 import flash from "express-flash";
 import session from "express-session";
-// import pgPromise from 'pg-promise';
+import pgPromise from 'pg-promise';
+
 
 const app = express();
 const greet1 = greet();
-// const pgp = pgPromise();
-// const db = pgp("postgres://ktbmqlfewjewga:db46b615c42ed38f43050b4fd1b875395874a1f89d7edbeeb8882529738cbb3a@ec2-50-19-255-190.compute-1.amazonaws.com:5432/daud1uk12sgdr5");
+const pgp = pgPromise();
+
+let useSSL = false;
+if (process.env.DATABASE_URL) {
+    useSSL = true;
+}
+const connectionString = pgp(process.env.DATABASE_URL || 'postgres://ktbmqlfewjewga:db46b615c42ed38f43050b4fd1b875395874a1f89d7edbeeb8882529738cbb3a@ec2-50-19-255-190.compute-1.amazonaws.com:5432/daud1uk12sgdr5');
+
+const db = connectionString;
+
+
 
 app.use(session({
     secret: "<add a secret string here>",
