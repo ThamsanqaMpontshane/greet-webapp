@@ -17,7 +17,7 @@
       <form action="/greetings" method="POST">
 
         <div class="num1">
-          <label for="username" style="margin-left: 189px; text-decoration: underline;font-size: 25px">Enter Your Name</label>
+          <label for="username"  style="margin-left: 189px; text-decoration: underline;font-size: 25px">Enter Your Name</label>
           <br>
           <br>
           <input type="text" name="theName" id="username" placeholder="Enter Your Name" style="margin-left:150px;width: 252px;height: 30px;">
@@ -64,7 +64,7 @@
   {{/if}}
 
   <h3 class="counter" name="thecounter" id="text" style="text-align: center;">{{thiscounter}}</h3>
-  <div id="message" name="theGreeting">{{getTheGreeting}}
+  {{!-- <div id="message" name="theGreeting">{{getTheGreeting}} --}}
   </div>
   <script src="timeout.js"></script>
 </body>

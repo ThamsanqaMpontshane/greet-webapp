@@ -4,17 +4,17 @@ import greet from '../greet.js';
 describe("GREETINGS APP", function () {
     describe("Greeting", function () {
         it("should greet the user in English", function () {
-            let greeting = greet();
+            const greeting = greet();
             assert.equal(greeting.greetingMessage("Lucky", "English"), "Hello Lucky");
         });
 
         it("should greet the user in Xhosa", function () {
-            let greeting = greet();
+            const greeting = greet();
             assert.equal(greeting.greetingMessage("Lucky", "Xhosa"), "Molo Lucky");
         });
 
         it("should greet the user in Afrikaans", function () {
-            let greeting = greet();
+            const greeting = greet();
             assert.equal(greeting.greetingMessage("Lucky", "Afrikaans"), "Hallo Lucky");
         });
 
@@ -22,7 +22,7 @@ describe("GREETINGS APP", function () {
 
     describe("Counter", function () {
         it("should count how many users have been greeted", function () {
-            let greeting = greet();
+            const greeting = greet();
             greeting.greetingMessage("Lucky", "English");
             greeting.greetingMessage("Lucky", "English");
             greeting.greetingMessage("Lucky", "English");

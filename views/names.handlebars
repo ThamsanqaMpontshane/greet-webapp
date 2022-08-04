@@ -1,8 +1,8 @@
 <h1 style="margin-left: 450px;margin-bottom: 40px">Names That Have Been Greeted</h1>
 <div style="text-align:center">
 {{#each names}}
-    <a href="/greeted/{{@key}}" style="text-decoration:none">
-    <h2>{{@key}}</h2>
+    <a href="/greeted/{{this.username}}" style="text-decoration:none">
+    <h2>{{this.username}}</h2>
     </a>
 {{/each}}
 </div>

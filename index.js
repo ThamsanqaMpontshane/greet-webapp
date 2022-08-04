@@ -8,18 +8,16 @@ import pgPromise from 'pg-promise';
 
 
 const app = express();
-const greet1 = greet();
-const pgp = pgPromise();
+const pgp = pgPromise({});
 
-let useSSL = false;
-if (process.env.DATABASE_URL) {
+const local = process.env.LOCAL;
+if (process.env.DATABASE_URL && !local) {
     useSSL = true;
 }
-const connectionString = pgp(process.env.DATABASE_URL || 'postgres://ktbmqlfewjewga:db46b615c42ed38f43050b4fd1b875395874a1f89d7edbeeb8882529738cbb3a@ec2-50-19-255-190.compute-1.amazonaws.com:5432/daud1uk12sgdr5');
+const connectionString = process.env.DATABASE_URL || 'postgresql://codex:pg123@localhost:5432/my_greet';
 
-const db = connectionString;
-
-
+const db = pgp(connectionString);
+const greet1 = greet(db);
 
 app.use(session({
     secret: "<add a secret string here>",
@@ -40,24 +38,25 @@ app.use(bodyParser.urlencoded({
 
 app.use(express.static("public"));
 
-// here we get the get the settings
-app.get("/", (req, res) => {
-    let theGreeting = greet1.getLanguage();
-    let bala = greet1.getCounter();
-    // let restart = greet1.clear();
+//  !here we get the get the settings
+app.get("/", async (req, res) => {
+    // console.log(req.body.theName + "sddsdsdsdsdsdsd")
+    // const theGreeting = greet1.setName(req.body.theName);
+    const bala = await greet1.everyoneCounter();
     res.render("index", {
-        getTheGreeting: theGreeting,
+        // getTheGreeting: theGreeting,
         thiscounter: bala,
-        // theClear: restart
     });
 });
 
-// set and send data or reset data
+// !set and send data or reset data
 app.post("/greetings", (req, res) => {
-    let name = req.body.theName;
-    let language = req.body.language;
-    let nameMap = greet1.getName();
+    const name = req.body.theName;
+    console.log(req.body.theName + "sddsdsdsdsdsdsd")
 
+    const {
+        language
+    } = req.body;
     if (name == "" && language == null) {
         req.flash("info", "Please Enter A Name And Language");
     } else if (name == "" && language !== null) {
@@ -67,33 +66,30 @@ app.post("/greetings", (req, res) => {
     } else if (language == null) {
         req.flash("info", "Please Select A Language");
     }
-    //duplicate name
-    else if (nameMap[name] > 1) {
-        req.flash("info", "You have already greeted " + name + " once");
-    }
-    greet1.setlanguage(name, language);
-    greet1.error(name, language);
-    greet1.setName(name, language);
-    greet1.duplicate(name);
+    greet1.setName(name);
     greet1.forCounter();
     res.redirect("/");
 });
 
-app.get("/greeted", function (req, res) {
-    console.log(greet1.getName());
+app.get("/greeted", async (req, res) => {
+    let listOfNames = await greet1.getName()
+    console.log(listOfNames);
     res.render('names', {
-        names: greet1.getName()
+        names: listOfNames
     });
+
 });
 
-app.get("/greeted/:name", function (req, res) {
-    let name = req.params.name;
-    let nameMap = greet1.getName();
+app.get("/greeted/:username", (req, res) => {
+    const {
+        name
+    } = req.params;
+    const nameMap = greet1.getName();
     for (let key in nameMap) {
         if (key === name) {
             res.render('counter', {
-                name: key,
-                count: " " + nameMap[key],
+                name,
+                count: ` ${name}`,
                 myMessage: "You have greeted ",
                 times: " times"
             });
@@ -103,5 +99,5 @@ app.get("/greeted/:name", function (req, res) {
 
 const port = process.env.PORT || 3004;
 app.listen(port, () => {
-    console.log("Server is running on port " + port);
+    console.log(`Server is listening on port ${port}`);
 });
