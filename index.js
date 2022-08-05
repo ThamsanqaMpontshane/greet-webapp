@@ -22,7 +22,7 @@ if(process.env.NODE_ENV == "production"){
     }
 }
 
-const db = pgp(connectionString);
+const db = pgp(config);
 const greet1 = greet(db);
 
 app.use(session({
