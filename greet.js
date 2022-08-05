@@ -1,10 +1,10 @@
 
 function greet(db) {
+    let greetingmessage = "";
    
     async function setName(name) {
-        //let username be an object that will store the names
         const result = await db.manyOrNone('select username from mygreetedusers where username = $1',[name])
-        if(result.length === 0){
+        if(result.length === 0 && name !== "" && name.match(/^[a-zA-Z]+$/)){
             db.none('INSERT INTO mygreetedusers (username, counter) VALUES ($1, $2)', [name, 1])
         }else{
             db.none('UPDATE mygreetedusers SET counter = counter + 1 WHERE username = $1', [name])
@@ -17,14 +17,29 @@ function greet(db) {
         }
 
     async function personsCounter(name){
-        const result = await db.manyOrNone('select counter from mygreetedusers where name = $1',[name])
-        console.log(result)
-        return result
+        return await db.manyOrNone('select counter from mygreetedusers where username = $1',[name])
     }
 
     async function everyoneCounter(){
         const result = await db.manyOrNone('select * from mygreetedusers')
         return result.length;
+    }
+    async function setTheGreeting(name,language){
+         if(language === "English"){
+            greetingmessage = `Hello ${name}`;
+            return;
+        }
+        if(language === "Xhosa"){
+            greetingmessage = `Molo ${name}`;
+            return;
+        }
+        if(language === "Afrikaans"){
+            greetingmessage = `Hallo ${name}`;
+            return;
+        }
+    }
+    async function greetingmsg(){
+        return greetingmessage;
     }
 
     async function reset() {
@@ -36,14 +51,14 @@ function greet(db) {
         return {
             setName,
             getName,
-            forCounter,
-            getLanguage,
-            getCounter,
             reset,
             personsCounter,
-            everyoneCounter
+            everyoneCounter,
+            setTheGreeting,
+            greetingmsg, 
         };
     }
+
 
     export default greet;
 

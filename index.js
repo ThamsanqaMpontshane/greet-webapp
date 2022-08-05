@@ -40,23 +40,20 @@ app.use(express.static("public"));
 
 //  !here we get the get the settings
 app.get("/", async (req, res) => {
-    // console.log(req.body.theName + "sddsdsdsdsdsdsd")
-    // const theGreeting = greet1.setName(req.body.theName);
+    const theMessages = await greet1.greetingmsg();
     const bala = await greet1.everyoneCounter();
+    // console.log(bala)
     res.render("index", {
-        // getTheGreeting: theGreeting,
-        thiscounter: bala,
+        theGreetingMessage: theMessages,
+        thiscounter: bala
     });
 });
 
 // !set and send data or reset data
-app.post("/greetings", (req, res) => {
+app.post("/greetings", async  (req, res) => {
     const name = req.body.theName;
-    console.log(req.body.theName + "sddsdsdsdsdsdsd")
 
-    const {
-        language
-    } = req.body;
+    const { language } = req.body;
     if (name == "" && language == null) {
         req.flash("info", "Please Enter A Name And Language");
     } else if (name == "" && language !== null) {
@@ -66,38 +63,36 @@ app.post("/greetings", (req, res) => {
     } else if (language == null) {
         req.flash("info", "Please Select A Language");
     }
+    greet1.setTheGreeting(name, language);
     greet1.setName(name);
-    greet1.forCounter();
+    // await greet1.everyoneCounter();
+  
     res.redirect("/");
 });
 
 app.get("/greeted", async (req, res) => {
-    let listOfNames = await greet1.getName()
-    console.log(listOfNames);
+    const listOfNames = await greet1.getName()
     res.render('names', {
         names: listOfNames
     });
 
 });
 
-app.get("/greeted/:username", (req, res) => {
-    const {
-        name
-    } = req.params;
-    const nameMap = greet1.getName();
-    for (let key in nameMap) {
-        if (key === name) {
-            res.render('counter', {
-                name,
-                count: ` ${name}`,
-                myMessage: "You have greeted ",
-                times: " times"
+app.get("/greeted/:theName", async (req, res) => {
+    const name = req.params.theName;
+    const personcounter = await greet1.personsCounter(name);
+    console.log(personcounter[0].counter);
+            res.render("counter", {
+                name: name,
+                count: personcounter[0].counter
             });
         }
-    }
-});
+        
+);
+
 
 const port = process.env.PORT || 3004;
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}`);
-});
+}
+);
