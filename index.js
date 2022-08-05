@@ -10,11 +10,17 @@ import pgPromise from 'pg-promise';
 const app = express();
 const pgp = pgPromise({});
 
-const local = process.env.LOCAL;
-if (process.env.DATABASE_URL && !local) {
-    useSSL = true;
-}
 const connectionString = process.env.DATABASE_URL || 'postgresql://codex:pg123@localhost:5432/my_greet';
+
+const config = {
+    connectionString    
+}
+
+if(process.env.NODE_ENV == "production"){
+    config.ssl = {
+        rejectUnauthorized: false
+    }
+}
 
 const db = pgp(connectionString);
 const greet1 = greet(db);
