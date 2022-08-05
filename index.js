@@ -90,9 +90,6 @@ app.get("/greeted/:theName", async (req, res) => {
         
 );
 
-
-const port = process.env.PORT || 3004;
-app.listen(port, () => {
-    console.log(`Server is listening on port ${port}`);
-}
-);
+app.listen(process.env.PORT || 3004, function(){
+    console.log("Express server listening on port", this.address().port, app.settings.env);
+  });
