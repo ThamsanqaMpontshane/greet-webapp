@@ -1,66 +1,65 @@
 
 function greet(db) {
     let greetingmessage = "";
-   
+
     async function setName(name) {
-        const result = await db.manyOrNone('select username from mygreetedusers where username = $1',[name])
-        if(result.length === 0 && name !== "" && name.match(/^[a-zA-Z]+$/)){
+        const result = await db.manyOrNone('select username from mygreetedusers where username = $1', [name])
+        if (result.length === 0 && name !== "" && name.match(/^[a-zA-Z]+$/)) {
             db.none('INSERT INTO mygreetedusers (username, counter) VALUES ($1, $2)', [name, 1])
-        }else{
+        
+        } else {
             db.none('UPDATE mygreetedusers SET counter = counter + 1 WHERE username = $1', [name])
         }
-      
     }
-            
+
     async function getName() {
         return await db.manyOrNone('select username from mygreetedusers');
-        }
-
-    async function personsCounter(name){
-        return await db.manyOrNone('select counter from mygreetedusers where username = $1',[name])
     }
 
-    async function everyoneCounter(){
-        const result = await db.manyOrNone('select * from mygreetedusers')
+    async function personsCounter(name) {
+        const result = await db.manyOrNone('select counter from mygreetedusers where username = $1', [name]);
+        return result;
+    }
+
+    async function everyoneCounter() {
+        const result = await db.manyOrNone('select * from mygreetedusers');
         return result.length;
     }
-    async function setTheGreeting(name,language){
-         if(language === "English"){
+    async function setTheGreeting(name, language) {
+        if(name !== "" && name.match(/^[a-zA-Z]+$/)){
+        if (language === "English") {
             greetingmessage = `Hello ${name}`;
             return;
         }
-        if(language === "Xhosa"){
+        if (language === "Xhosa") {
             greetingmessage = `Molo ${name}`;
             return;
         }
-        if(language === "Afrikaans"){
+        if (language === "Afrikaans") {
             greetingmessage = `Hallo ${name}`;
             return;
         }
     }
-    async function greetingmsg(){
+    }
+    async function greetingmsg() {
         return greetingmessage;
     }
 
     async function reset() {
-            nameMap = {};
-            greetingmessage = "";
-            greetingerror = "";
-        }
-
-        return {
-            setName,
-            getName,
-            reset,
-            personsCounter,
-            everyoneCounter,
-            setTheGreeting,
-            greetingmsg, 
-        };
+        await db.none('delete from mygreetedusers');
     }
 
-
-    export default greet;
+    return {
+        setName,
+        getName,
+        reset,
+        personsCounter,
+        everyoneCounter,
+        setTheGreeting,
+        greetingmsg,
+    };
+}
+export default greet;
 
 
 
@@ -132,8 +131,8 @@ function greet(db) {
 //     const username = {};
 //     async function setName(name, language) {
 //         //let username be an object that will store the names
-        
-        
+
+
 //         if(name !== '' && language !== null) {
 //             username.name = name;
 //             if(name.match(/^[a-zA-Z]+$/)) {
@@ -152,7 +151,7 @@ function greet(db) {
 //                 else if(language === 'xhosa' && newUser.username !== '' && newUser.counter === 0) {
 //                     greetingmessage = `Molo ${name}`;
 //                     db.none('INSERT INTO mygreetedusers (username, counter) VALUES ($1, $2)', [name, 1])
-                    
+
 //                 }else if(language === 'afrikaans' && newUser.username !== '' && newUser.counter === 0) {
 //                     greetingmessage = `Hallo ${name}`;
 //                     db.none('INSERT INTO mygreetedusers (username, counter) VALUES ($1, $2)', [name, 1])
@@ -168,7 +167,7 @@ function greet(db) {
 //     async function getName() {
 //         // return nameMap;
 //         }
-        
+
 //     async function getLanguage() {
 //         return greetingmessage;
 //         }
@@ -198,5 +197,3 @@ function greet(db) {
 //     }
 
 //     export default greet;
-
-
