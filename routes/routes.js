@@ -40,7 +40,7 @@ async function Summary(req, res) {
     const personcounter = await greetings.personsCounter(name);
     res.render("counter", {
         name,
-        count: personcounter[0].counter,
+        count: personcounter,
     });
 }
 

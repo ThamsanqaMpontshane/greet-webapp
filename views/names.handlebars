@@ -1,11 +1,19 @@
 <h1 style="margin-left: 450px;margin-bottom: 40px">Names That Have Been Greeted</h1>
-<p style="color: grey;margin-left: 310px;font-size:25px">(Click On The Name To See How Many Times A Person Has Been Greeted)</p>
+<p style="color: grey;margin-left: 310px;font-size:25px">(Click On The Name To See How Many Times A Person Has Been
+    Greeted)</p>
 <div style="text-align:center">
-{{#each names}}
-    <a href="/greeted/{{this.username}}">
-    <h2>{{this.username}}</h2>
-    </a>
-{{/each}}
+    {{!-- table with name and count header --}}
+    <table style="margin-left: auto;margin-right: auto;width: 500px;border-collapse: collapse;border: 1px solid black;">
+        <tr>
+            <th style="border: 1px solid black;font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">Names</th>
+        </tr>
+        {{#each names}}
+        <tr>
+            <td style="border: 1px solid black;">
+                <a href="/greeted/{{this.username}}">
+                    <h2>{{this.username}}</h2>
+                </a>
+            </td>
+        </tr>
+        {{/each}}
 </div>
-
-
