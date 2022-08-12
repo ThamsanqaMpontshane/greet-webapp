@@ -1,91 +1,78 @@
 import assert from 'assert';
 import greet from '../greet.js';
+import pgPromise from 'pg-promise';
 
-describe("GREETINGS APP", function () {
-    describe("Greeting", function () {
-        it("should greet the user in English", function () {
-            const greeting = greet();
-            assert.equal(greeting.greetingMessage("Lucky", "English"), "Hello Lucky");
-        });
+const pgp = pgPromise({});
 
-        it("should greet the user in Xhosa", function () {
-            const greeting = greet();
-            assert.equal(greeting.greetingMessage("Lucky", "Xhosa"), "Molo Lucky");
-        });
+const connectionString = process.env.DATABASE_URL || 'postgresql://codex:pg123@localhost:5432/my_greet';
 
-        it("should greet the user in Afrikaans", function () {
-            const greeting = greet();
-            assert.equal(greeting.greetingMessage("Lucky", "Afrikaans"), "Hallo Lucky");
-        });
+const config = {
+    connectionString
+}
 
-    });
+if(process.env.NODE_ENV == "production"){
+    config.ssl = {
+        rejectUnauthorized: false
+    }
+}
 
-    describe("Counter", function () {
-        it("should count how many users have been greeted", function () {
-            const greeting = greet();
-            greeting.greetingMessage("Lucky", "English");
-            greeting.greetingMessage("Lucky", "English");
-            greeting.greetingMessage("Lucky", "English");
-            assert.equal(greeting.forCounter(), 1);
-        });
+const db = pgp(config);
+const greet1 = greet(db);
 
-        it("should count how many users have been greeted", function () {
-            let greeting = greet();
-            greeting.greetingMessage("Thamie", "English");
-            greeting.greetingMessage("Mabhozeni", "English");
-            greeting.greetingMessage("Khisto", "English");
-            assert.equal(greeting.forCounter(), 3);
-        });
-
-        it("should count how many users have been greeted", function () {
-            let greeting = greet();
-            greeting.greetingMessage("Thamie", "English");
-            greeting.greetingMessage("Thamie", "English");
-            greeting.greetingMessage("Khisto", "English");
-            assert.equal(greeting.forCounter(), 2);
-        });
-
-        it("should count how many users have been greeted", function () {
-            let greeting = greet();
-            greeting.greetingMessage("Thamie", "English");
-            greeting.greetingMessage("Thamie", "English");
-            greeting.greetingMessage("Khisto", "English");
-            greeting.greetingMessage("Khisto", "English");
-            greeting.greetingMessage("Khisto", "English");
-            greeting.greetingMessage("Lucky", "English");
-            assert.equal(greeting.forCounter(), 3);
-        });
-    });
-
-    describe("Error Messages", function () {
-        it("should return error message when name is empty and language is empty", function () {
-            let greeting = greet();
-            assert.equal(greeting.error("", null), "Please Enter A Name And Language");
-        });
-        it("should return error message when name is empty and language is not empty", function () {
-            let greeting = greet();
-            assert.equal(greeting.error("", "English"), "Please Enter A Name");
-        });
-        it("should return error message when name is not empty and language is empty", function () {
-            let greeting = greet();
-            assert.equal(greeting.error("Lucky", null), "Please Select A Language");
-        });
-        it("should return error message when name does not match the regex", function () {
-            let greeting = greet();
-            assert.equal(greeting.error("123", "English"), "Please Enter A Valid Name");
-        });
-    });
-
-    describe("Duplicates", function () {
-        it("should return true if name is in the list", function () {
-            let greeting = greet();
-            greeting.greetingMessage("Lucky", "English");
-            assert.equal(greeting.duplicates("Lucky"), true);
-        });
-        it("should return false if name is not in the list", function () {
-            let greeting = greet();
-            greeting.greetingMessage("Khisto", "English");
-            assert.equal(greeting.duplicates("Lucky"), false);
-        });
-    });
+describe("GREETINGS APP", async () => {
+   beforeEach(async () => {
+       await db.manyOrNone('Delete from mygreetedusers where id > 0');
+   });
+    it("should greet username in English", async () => {
+        const name = "John";
+        await greet1.setName(name);
+        await greet1.setTheGreeting(name, "English");
+        const greeting = await greet1.greetingmsg();
+        assert.equal(greeting, "Hello John");
+    }),
+    it("should greet username in Xhosa", async () => {
+        const name = "John";
+        await greet1.setName(name);
+        await greet1.setTheGreeting(name, "Xhosa");
+        const greeting = await greet1.greetingmsg();
+        assert.equal("Molo John", greeting);
+    }),
+    it("should greet username in Afrikaans", async () => {
+        const name = "John";
+        await greet1.setName(name);
+        await greet1.setTheGreeting(name, "Afrikaans");
+        const greeting = await greet1.greetingmsg();
+        assert.equal("Hallo John", greeting);
+    }),
+    it("should be able to count how many people have been greeted", async () => {
+        await greet1.setName("lucky");
+        await greet1.setName("thamsanqa");
+        assert.equal(2,await greet1.everyoneCounter("lucky") );
+    }),
+    it("should be able to count how many people have been greeted", async () => {
+        await greet1.setName("lucky");
+        await greet1.setName("thamsanqa");
+        await greet1.setName("thamie");
+        assert.equal(3,await greet1.everyoneCounter());
+    }),
+    it("should be able to count how many times `Luckeez` has been greeted", async () => {
+        await greet1.setName("luckeez");
+        await greet1.setName("luckeez");
+        assert.equal(2,await greet1.personsCounter("luckeez") );
+    })
+    it("should be able to count how many times `Thamsanqa` has been greeted", async () => {
+        await greet1.setName("thamsanqa");
+        await greet1.setName("thamsanqa");
+        await greet1.setName("thamsanqa");
+        assert.equal(3,await greet1.personsCounter("thamsanqa") );
+    }),
+    it("should be able to count how many times `Thamie` has been greeted", async () => {
+        await greet1.setName("thamie");
+        await greet1.setName("thamsanqa");
+        await greet1.setName("lucky");
+        assert.equal(1,await greet1.personsCounter("thamie") );
+    })
+    after(async () => {
+        await db.manyOrNone('Truncate mygreetedusers');
+    })
 });

@@ -14,26 +14,29 @@
     <div class="main">
       <h1>GREETINGS</h1>
       <br>
-      <form action="/greetings" method="POST">
+      <form action="/greetings" method="POST" class="form-style">
 
         <div class="num1">
-          <label for="username"  style="margin-left: 189px; text-decoration: underline;font-size: 25px">Enter Your Name</label>
+          <label for="username" style="margin-left: 189px; text-decoration: underline;font-size: 25px">Enter Your
+            Name</label>
           <br>
           <br>
-          <input type="text" name="theName" id="username" placeholder="Enter Your Name" style="margin-left:150px;width: 252px;height: 30px;">
+          <input type="text" name="theName" id="username" placeholder="Enter Your Name"
+            style="margin-left:150px;width: 252px;height: 30px;">
         </div>
         <br>
-        <label for="language" style="margin-left: 190px; text-decoration: underline;font-size:25px">Select Language</label>
+        <label for="language" style="margin-left: 190px; text-decoration: underline;font-size:25px">Select
+          Language</label>
         <br><br><br>
-        <div style="margin-left: 130px;">        
+        <div style="margin-left: 130px;">
           <input type="radio" name="language" value="English" id="english" style="margin-left: 35px">
-        <label for="english">English</label>
+          <label for="english">English</label>
 
-        <input type="radio" name="language" value="Xhosa" id="xhosa">
-        <label for="xhosa">Xhosa</label>
+          <input type="radio" name="language" value="Xhosa" id="xhosa">
+          <label for="xhosa">Xhosa</label>
 
-        <input type="radio" name="language" value="Afrikaans" id="afrikaans">
-        <label for="afrikaans">Afrikaans</label>
+          <input type="radio" name="language" value="Afrikaans" id="afrikaans">
+          <label for="afrikaans">Afrikaans</label>
         </div>
 
 
@@ -44,12 +47,12 @@
     <div class="btn">
       <button type="submit" class="btn1">Greet</button>
 
+    </form>
 
-
-      <button type="reset" class="btn2">Clear</button>
+      <a href="/reset"> <button type="submit" class="btn2">Clear</button>
+      </a>
     </div>
 
-    </form>
     <a href="/greeted" class="btn2">
       <button type="submit" style="margin-left: 210px; margin-top:10px">Greeted Names</button>
     </a>
