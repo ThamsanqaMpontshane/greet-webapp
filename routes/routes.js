@@ -11,8 +11,8 @@ const greeter = (greetings) => {
 
 async function Homepage(req, res) {
     const name = req.body.theName;
-    await greetings.setName(name);
-    const {language } = req.body;
+    const { language } = req.body;
+    await greetings.setName(name,language);
 
     if (name == "" && language == null) {
         req.flash("info", "Please Enter A Name And Language");

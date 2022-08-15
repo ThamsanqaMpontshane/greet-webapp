@@ -1,13 +1,14 @@
 function greet(db) {
     let greetingmessage = "";
-    async function setName(name) {
+    async function setName(name, language) {
         const upperCasedName = name.toUpperCase();
         const result = await db.manyOrNone('select username from mygreetedusers where username = $1', [upperCasedName]);
-
+        if(language) {
         if (result.length == 0 && upperCasedName !== "" && upperCasedName.match(/^[a-zA-Z]+$/)) {
             await db.none('INSERT INTO mygreetedusers (username, counter) VALUES ($1, $2)', [upperCasedName, 1]);
         } else if (result.length >= 1) {
             await db.none('UPDATE mygreetedusers SET counter = counter + 1 WHERE username = $1', [upperCasedName]);
+        }
         }
     }
 
