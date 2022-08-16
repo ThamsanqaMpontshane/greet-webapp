@@ -3,8 +3,12 @@
 
 name: NodeJS CI with PostgreSQL
 
-on: push: branches: [ main ] 
-    pull_request: branches: [ main ]
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
 
 jobs: build:
 
