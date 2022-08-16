@@ -15,7 +15,7 @@ async function Homepage(req, res) {
     await greetings.setName(name,language);
 
     if (name == "" && language == null) {
-        req.flash("info", "Please Enter A Name And Language");
+        req.flash("info", "Please Enter A Name And Language")
     } else if (name == "" && language !== null) {
         req.flash("info", "Please Enter A Name");
     } else if (!name.match(/^[a-zA-Z]+$/)) {
