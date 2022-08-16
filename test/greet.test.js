@@ -4,7 +4,7 @@ import pgPromise from 'pg-promise';
 
 const pgp = pgPromise({});
 
-const connectionString = process.env.DATABASE_URL || 'postgresql://codex:pg123@localhost:5432/my_greet';
+const connectionString = process.env.DATABASE_URL || 'postgresql://codex:pg123@localhost:5432/thegreet';
 
 const config = {
     connectionString
@@ -45,31 +45,31 @@ describe("GREETINGS APP", async () => {
         assert.equal("Hallo John", greeting);
     }),
     it("should be able to count how many people have been greeted", async () => {
-        await greet1.setName("lucky");
-        await greet1.setName("thamsanqa");
-        assert.equal(2,await greet1.everyoneCounter("lucky") );
+        await greet1.setName("lucky", "Xhosa" );
+        await greet1.setName("thamsanqa","English" );
+        assert.equal(2,await greet1.everyoneCounter() );
     }),
     it("should be able to count how many people have been greeted", async () => {
-        await greet1.setName("lucky");
-        await greet1.setName("thamsanqa");
-        await greet1.setName("thamie");
+        await greet1.setName("lucky","Xhosa");
+        await greet1.setName("thamsanqa", "Xhosa");
+        await greet1.setName("thamie", "Xhosa");
         assert.equal(3,await greet1.everyoneCounter());
     }),
     it("should be able to count how many times `Luckeez` has been greeted", async () => {
-        await greet1.setName("luckeez");
-        await greet1.setName("luckeez");
+        await greet1.setName("luckeez", "Xhosa");
+        await greet1.setName("luckeez", "Xhosa");
         assert.equal(2,await greet1.personsCounter("luckeez") );
     })
     it("should be able to count how many times `Thamsanqa` has been greeted", async () => {
-        await greet1.setName("thamsanqa");
-        await greet1.setName("thamsanqa");
-        await greet1.setName("thamsanqa");
+        await greet1.setName("thamsanqa", "Xhosa");
+        await greet1.setName("thamsanqa","Xhosa");
+        await greet1.setName("thamsanqa", "Xhosa");
         assert.equal(3,await greet1.personsCounter("thamsanqa") );
     }),
     it("should be able to count how many times `Thamie` has been greeted", async () => {
-        await greet1.setName("thamie");
-        await greet1.setName("thamsanqa");
-        await greet1.setName("lucky");
+        await greet1.setName("thamie", "Xhosa");
+        await greet1.setName("thamsanqa", "Xhosa");
+        await greet1.setName("lucky", "Xhosa");
         assert.equal(1,await greet1.personsCounter("thamie") );
     })
     after(async () => {

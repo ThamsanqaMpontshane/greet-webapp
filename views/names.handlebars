@@ -1,15 +1,25 @@
-<h1 style="margin-left: 450px;margin-bottom: 40px">Names That Have Been Greeted</h1>
-<p style="color: grey;margin-left: 310px;font-size:25px">(Click On The Name To See How Many Times A Person Has Been
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Greetings</title>
+  <link rel="stylesheet" href="/css/style2.css">
+</head>
+<h1 class="theheading">Names That Have Been Greeted</h1>
+<p class="calltoaction">(Click On The Name To See How Many Times A Person Has Been
     Greeted)</p>
-<div style="text-align:center">
+<div class="mytablediv">
     {{!-- table with name and count header --}}
-    <table style="margin-left: auto;margin-right: auto;width: 500px;border-collapse: collapse;border: 1px solid black;">
+    <table class="mytable">
         <tr>
-            <th style="border: 1px solid black;font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">Names</th>
+            <th class="headingtablenames">Names</th>
         </tr>
         {{#each names}}
         <tr>
-            <td style="border: 1px solid black;">
+            <td class="myTD">
                 <a href="/greeted/{{this.username}}">
                     <h2>{{this.username}}</h2>
                 </a>
@@ -17,3 +27,4 @@
         </tr>
         {{/each}}
 </div>
+</html>

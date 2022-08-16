@@ -11,7 +11,6 @@
     background-color: #DBCBD8;
 
     border-radius: 0px 50px;
-    /* box-shadow: 0 0 10px rgba(0,0,0,0.5); */
     border: 3px solid black;
 }
 
@@ -55,6 +54,31 @@ h1 {
     margin-right: auto;
     margin-top: 10px;
 }
+.namebox{
+    margin-left: 189px; 
+    text-decoration: underline;
+    font-size: 25px;
+}
+.myinput{
+    margin-left:150px;
+    width: 252px;
+    height: 30px;
+}
+.selectlanguage{
+    margin-left: 190px;
+    text-decoration: underline;
+    font-size: 25px
+}
+.selectlanguagediv{
+    margin-left: 130px;
+}
+.greetednamesbutton{
+    margin-left: 210px;
+    margin-top: 10px
+}
+.entry{
+    margin-left: 20px;
+}
 
 /* button on hover */
 button:hover {
@@ -64,9 +88,63 @@ button:hover {
     border-radius: 20px;
 }
 
-.myNgidi{
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10px;
+@media screen and (max-width: 600px) and (min-width: 400px) {
+    .container {
+        width: 80%;
+        height: 100%;
+        margin: 30% 10%;
+    }
+    .namebox{
+        width: 10%;
+        margin: 0 22%;
+    }
+    .myinput{
+        margin-left: 30px;
+    }
+    .selectlanguage{
+        margin-left: 73px;
+    }
+    .selectlanguagediv{
+        margin-left: 20px;
+    }
+    .btn1{
+        margin-left: 54px;
+    }
+    .greetednamesbutton{
+        margin-left: 98px;
+    }
+    .entry{
+        margin-left: 20px;
+    }
 }
 
+@media screen and (max-width: 400px) {
+    .container {
+        width: 80%;
+        height: 100%;
+        margin: 30% 10%;
+    }
+    .namebox{
+        width: 20%;
+        margin: 0 19%;
+    }
+    .myinput{
+        margin-left: 7%;
+    }
+    .selectlanguage{
+        margin-left: 20%;
+    }
+    .selectlanguagediv{
+        margin-left: 2%;
+    }
+    .btn1{
+        margin-left: 13%;
+    }
+    .greetednamesbutton{
+        margin-left: 30%;
+    }
+    .entry{
+        margin-left: 20px;
+    }
+}
+    
