@@ -3,4 +3,3 @@ CREATE Table mygreetedusers (
   username varchar(255) NOT NULL,
   counter integer NOT NULL
 );
-
