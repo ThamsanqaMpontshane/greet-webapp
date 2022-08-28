@@ -47,7 +47,7 @@ describe("GREETINGS APP", async () => {
     it("should be able to count how many people have been greeted", async () => {
         await greet1.setName("lucky", "Xhosa" );
         await greet1.setName("thamsanqa","English" );
-        assert.equal(2,await greet1.everyoneCounter() );
+        assert.equal(2,await greet1.everyoneCounter());
     }),
     it("should be able to count how many people have been greeted", async () => {
         await greet1.setName("lucky","Xhosa");

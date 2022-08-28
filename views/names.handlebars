@@ -6,20 +6,20 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Greetings</title>
-  <link rel="stylesheet" href="/css/style2.css">
+  <link rel="stylesheet" href="/css/tailwind.css">
 </head>
-<h1 class="theheading">Names That Have Been Greeted</h1>
-<p class="calltoaction">(Click On The Name To See How Many Times A Person Has Been
+<h1 class="text-center text-3xl pb-1">Names That Have Been Greeted</h1>
+<p class="text-center pb-11 text-orange-400">(Click On The Name To See How Many Times A Person Has Been
     Greeted)</p>
-<div class="mytablediv">
+<div class="flex flex-col items-center">
     {{!-- table with name and count header --}}
-    <table class="mytable">
+    <table class="border-collapse border-2 border-orange-400 w-2/5">
         <tr>
-            <th class="headingtablenames">Names</th>
+            <th class="border border-slate-300 text-2xl py-4">Names</th>
         </tr>
         {{#each names}}
         <tr>
-            <td class="myTD">
+            <td class="border border-slate-300 text-center py-1">
                 <a href="/greeted/{{this.username}}">
                     <h2>{{this.username}}</h2>
                 </a>

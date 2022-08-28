@@ -13,6 +13,7 @@ async function Homepage(req, res) {
     const name = req.body.theName;
     const { language } = req.body;
     await greetings.setName(name,language);
+    const getTheName = await greetings.getName();
 
     if (name == "" && language == null) {
         req.flash("info", "Please Enter A Name And Language")
@@ -22,6 +23,8 @@ async function Homepage(req, res) {
         req.flash("info", "Please Enter A Valid Name");
     } else if (language == null) {
         req.flash("info", "Please Select A Language");
+    }else if (getTheName.includes(name)){
+        req.flash("info", "The Name Exist");
     }
     await greetings.setTheGreeting(name, language);
     await greetings.everyoneCounter();
