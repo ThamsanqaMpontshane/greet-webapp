@@ -16,7 +16,7 @@ async function Homepage(req, res) {
     const getTheName = await greetings.getName();
 
     if (name == "" && language == null) {
-        req.flash("info", "Please Enter A Name And Language")
+        req.flash("info", "Please Enter A Name And Language");
     } else if (name == "" && language !== null) {
         req.flash("info", "Please Enter A Name");
     } else if (!name.match(/^[a-zA-Z]+$/)) {
@@ -33,6 +33,7 @@ async function Homepage(req, res) {
 
 async function GreetedNames(req, res) {
     const listOfNames = await greetings.getName()
+    console.log(listOfNames);
     res.render('names', {
         names: listOfNames
     });

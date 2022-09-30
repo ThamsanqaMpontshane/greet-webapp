@@ -54,4 +54,5 @@ app.get("/greeted/:theName", Routers.Summary);
 app.get("/reset", Routers.reset);
 // !PORT
 app.listen(process.env.PORT || 3_004, () => {
+    console.log(`Server is running on port ${process.env.PORT || 3_004}`);
   });
