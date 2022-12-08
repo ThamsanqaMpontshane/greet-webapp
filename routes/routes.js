@@ -53,6 +53,7 @@ async function reset(req, res) {
     req.flash("info", "The Database Has Been Reset");
     res.redirect("/")
 }
+
 return {
     defaultRoute,
     Homepage,
